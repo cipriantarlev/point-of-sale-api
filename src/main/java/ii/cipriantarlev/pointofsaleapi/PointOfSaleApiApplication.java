@@ -1,3 +1,8 @@
+/*
+ * ******************************************************************************
+ *  © 2023 II Ciprian Tarlev. All Rights Reserved.
+ * ******************************************************************************
+ */
 package ii.cipriantarlev.pointofsaleapi;
 
 import org.springframework.boot.SpringApplication;
