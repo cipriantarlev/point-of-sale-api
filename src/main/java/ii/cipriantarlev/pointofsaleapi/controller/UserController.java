@@ -49,7 +49,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDto> getUser(@PathVariable UUID id) {
 		var user = userService.findById(id);
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping
@@ -65,7 +65,7 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto) {
 		var savedUser = userService.update(userDto);
-		return new ResponseEntity<>(savedUser, HttpStatus.OK);
+		return ResponseEntity.ok(savedUser);
 	}
 
 	@DeleteMapping(ID_PATH)

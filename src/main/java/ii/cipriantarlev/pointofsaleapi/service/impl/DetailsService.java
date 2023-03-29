@@ -4,7 +4,6 @@
 package ii.cipriantarlev.pointofsaleapi.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ii.cipriantarlev.pointofsaleapi.model.RoleDto;
 import ii.cipriantarlev.pointofsaleapi.model.UserDto;
@@ -24,17 +23,17 @@ public class DetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDto user = userService.findByUsername(username);
-		if (user == null) {
-			throw new UsernameNotFoundException(username + "was not found");
+		if (user != null) {
+			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+					AuthorityUtils.createAuthorityList(mapRoleDTOToStringArray(user.getRoles())));
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-				AuthorityUtils.createAuthorityList(mapRoleDTOToStringArray(user.getRoles())));
+		throw new UsernameNotFoundException(username + "was not found");
 	}
 
 	private String[] mapRoleDTOToStringArray(List<RoleDto> roles) {
 		List<String> roleList = roles.stream()
 									 .map(RoleDto::getRole)
-									 .collect(Collectors.toList());
+									 .toList();
 
 		return roleList.toArray(new String[0]);
 	}
